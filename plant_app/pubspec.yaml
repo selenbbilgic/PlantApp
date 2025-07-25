@@ -35,8 +35,11 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   flutter_bloc: ^9.1.1
+  auto_route: ^10.1.0+1
 
 dev_dependencies:
+  auto_route_generator: ^10.1.0
+  build_runner: ^2.5.4
   flutter_test:
     sdk: flutter
 
