@@ -65,3 +65,22 @@ class OnboardingViewRoute extends PageRouteInfo<void> {
     },
   );
 }
+
+/// generated route for
+/// [PaywallView]
+class PaywallViewRoute extends PageRouteInfo<void> {
+  const PaywallViewRoute({List<PageRouteInfo>? children})
+      : super(
+          PaywallViewRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PaywallViewRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const PaywallView();
+    },
+  );
+}
