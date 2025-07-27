@@ -1,8 +1,13 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:plant_app/blocs/app_bloc.dart';
+import 'package:plant_app/blocs/app_event.dart';
+import 'package:plant_app/core/constants/images.dart';
 import 'package:plant_app/core/widgets/primary_button.dart';
+import 'package:plant_app/routes/app_router.dart';
 
-@RoutePage()
 class OnboardingPage2 extends StatelessWidget {
   const OnboardingPage2({super.key});
 
@@ -52,7 +57,7 @@ class OnboardingPage2 extends StatelessWidget {
               // Centered Onboarding Image
               Expanded(
                 child: Image.asset(
-                  'assets/images/onboarding_1_phone.png', // Replace with your image asset
+                  ONBOARDING_2_IMAGE, // Replace with your image asset
                   width: double.infinity,
                   fit: BoxFit.contain,
                 ),
@@ -65,7 +70,8 @@ class OnboardingPage2 extends StatelessWidget {
                 label: 'Continue',
                 onPressed: () {
                   // Navigate to next onboarding page
-                  Navigator.pushNamed(context, '/onboarding2');
+                  context.router.replaceAll([const BottomNavBarViewRoute()]);
+                  context.read<AppBloc>().add(OnboardingCompleted());
                 },
               ),
 

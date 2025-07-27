@@ -4,13 +4,14 @@ final ThemeData lightThemeData = ThemeData(
   brightness: Brightness.light,
   scaffoldBackgroundColor: Colors.white,
   fontFamily: 'Roboto',
-  primaryColor: Color(0xFF00A86B), // Plant green
+  primaryColor: Color(0xFF2CCC80B), // Plant green
   colorScheme: ColorScheme.light(
     primary: Color(0xFF00A86B), // Green buttons
     secondary: Color(0xFFEEEEEE), // Light gray for backgrounds/cards
     onPrimary: Colors.white, // Text on green button
     onSecondary: Colors.black, // Text on secondary bg
   ),
+
   appBarTheme: AppBarTheme(
     backgroundColor: Colors.white,
     elevation: 0,
@@ -22,6 +23,11 @@ final ThemeData lightThemeData = ThemeData(
     iconTheme: IconThemeData(color: Colors.black),
   ),
   textTheme: TextTheme(
+    headlineMedium: TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.w600,
+      color: Color(0xFF13231B),
+    ),
     displayLarge: TextStyle(
       fontSize: 32,
       fontWeight: FontWeight.bold,
@@ -32,7 +38,11 @@ final ThemeData lightThemeData = ThemeData(
       fontWeight: FontWeight.w600,
       color: Colors.black,
     ),
-    bodyLarge: TextStyle(fontSize: 16, color: Colors.black87),
+    bodyLarge: TextStyle(
+      fontSize: 16,
+      color: Color(0xFF13231B),
+      fontWeight: FontWeight.w100,
+    ),
     bodyMedium: TextStyle(fontSize: 14, color: Colors.black87),
     labelLarge: TextStyle(
       fontSize: 14,

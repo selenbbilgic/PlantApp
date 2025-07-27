@@ -3,9 +3,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:plant_app/core/constants/images.dart';
 import 'package:plant_app/core/widgets/primary_button.dart';
-import 'package:plant_app/routes/app_routing.dart';
+import 'package:plant_app/routes/app_router.dart';
 
-@RoutePage()
 class OnboardingPage1 extends StatelessWidget {
   const OnboardingPage1({super.key});
 
@@ -68,7 +67,6 @@ class OnboardingPage1 extends StatelessWidget {
                 label: 'Continue',
                 onPressed: () {
                   // Navigate to next onboarding page
-                  context.router.push(const OnboardingRoute2());
                 },
               ),
 

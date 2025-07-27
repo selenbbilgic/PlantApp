@@ -4,7 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:plant_app/core/constants/images.dart';
 import 'package:plant_app/core/widgets/primary_button.dart';
-import 'package:plant_app/routes/app_routing.dart';
+import 'package:plant_app/routes/app_router.dart';
 
 @RoutePage()
 class GetStartedPage extends StatelessWidget {
@@ -72,7 +72,7 @@ class GetStartedPage extends StatelessWidget {
                 child: PrimaryButton(
                   label: 'Get Started',
                   onPressed: () {
-                    context.router.push(const OnboardingRoute1());
+                    context.router.push(const OnboardingViewRoute());
                   },
                 ),
               ),
