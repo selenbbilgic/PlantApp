@@ -44,8 +44,8 @@ class BottomNavBarViewState extends State<BottomNavBarView> {
         decoration: BoxDecoration(
           border: Border(
             top: BorderSide(
-              color: Theme.of(context).colorScheme.secondary,
-              width: 2,
+              color: Theme.of(context).colorScheme.secondary.withAlpha(80),
+              width: 1,
             ),
           ),
         ),
