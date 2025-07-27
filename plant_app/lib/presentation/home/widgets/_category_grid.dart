@@ -14,6 +14,7 @@ class CategoryGrid extends StatelessWidget {
         } else if (state is CategoryLoadSuccess) {
           final categories = state.categories;
           return GridView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: categories.length,
@@ -25,23 +26,45 @@ class CategoryGrid extends StatelessWidget {
             ),
             itemBuilder: (ctx, idx) {
               final cat = categories[idx];
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(16),
+              return Card(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  side: BorderSide(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.secondary.withAlpha(80),
+                    width: 0.5,
+                  ),
+                ),
+                clipBehavior: Clip.antiAlias,
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
+                    Container(color: Theme.of(context).colorScheme.onSurface),
                     Image.network(
                       cat.image.url,
                       fit: BoxFit.cover,
                       errorBuilder:
-                          (_, __, ___) => Container(color: Colors.grey[200]),
+                          (_, __, ___) => Container(
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
                     ),
-                    Container(color: Colors.white.withOpacity(0.5)),
-                    Center(
-                      child: Text(
-                        cat.title,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                        width: 120,
+                        alignment: Alignment.topLeft,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 16,
+                        ),
+                        child: Text(
+                          cat.title,
+                          textAlign: TextAlign.left,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
                       ),
                     ),
                   ],
