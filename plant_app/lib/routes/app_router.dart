@@ -4,6 +4,7 @@ import 'package:plant_app/presentation/onboarding/get_started_page.dart';
 import 'package:plant_app/presentation/onboarding/onboarding_page_1.dart';
 import 'package:plant_app/presentation/onboarding/onboarding_page_2.dart';
 import 'package:plant_app/presentation/onboarding/onboarding_view.dart';
+import 'package:plant_app/presentation/paywall/paywall_view.dart';
 
 part 'app_router.gr.dart';
 
@@ -14,5 +15,10 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: GetStartedPageRoute.page, initial: true),
     AutoRoute(page: OnboardingViewRoute.page),
     AutoRoute(page: BottomNavBarViewRoute.page),
+    AutoRoute(page: PaywallViewRoute.page),
   ];
 }
+
+
+// flutter pub run build_runner clean
+// dart run build_runner build --delete-conflicting-outputs

@@ -11,31 +11,38 @@ class PremiumBanner extends StatelessWidget {
         color: Colors.black87,
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Row(
-        children: [
-          const Icon(Icons.email, color: Colors.white),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  'FREE Premium Available',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+      child: InkWell(
+        onTap: () => context.router.push(const PaywallViewRoute()),
+        child: Row(
+          children: [
+            const Icon(Icons.email, color: Colors.white),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    'FREE Premium Available',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  'Tap to upgrade your account!',
-                  style: TextStyle(color: Colors.white70),
-                ),
-              ],
+                  SizedBox(height: 4),
+                  Text(
+                    'Tap to upgrade your account!',
+                    style: TextStyle(color: Colors.white70),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const Icon(Icons.arrow_forward_ios, color: Colors.white70, size: 16),
-        ],
+            const Icon(
+              Icons.arrow_forward_ios,
+              color: Colors.white70,
+              size: 16,
+            ),
+          ],
+        ),
       ),
     );
   }

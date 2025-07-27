@@ -17,6 +17,8 @@ import 'package:plant_app/data/repositories/category_repository.dart';
 import 'package:plant_app/data/repositories/question_repository.dart';
 import 'package:plant_app/data/sources/category_data_source.dart';
 import 'package:plant_app/data/sources/question_data_source.dart';
+import 'package:plant_app/presentation/paywall/paywall_view.dart';
+import 'package:plant_app/routes/app_router.dart';
 part 'widgets/_home_header.dart';
 part 'widgets/_search_bar.dart';
 part 'widgets/_premium_banner.dart';
