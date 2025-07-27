@@ -1,8 +1,12 @@
+import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:plant_app/core/constants/images.dart';
 import 'package:plant_app/core/widgets/primary_button.dart';
+import 'package:plant_app/routes/app_router.dart';
 
+@RoutePage()
 class GetStartedPage extends StatelessWidget {
   const GetStartedPage({super.key});
 
@@ -52,7 +56,7 @@ class GetStartedPage extends StatelessWidget {
                   alignment: Alignment.center,
                   children: [
                     Image.asset(
-                      ONBOARDING_1_IMAGE,
+                      GET_STARTED_IMAGE,
                       width: double.infinity,
                       fit: BoxFit.contain,
                     ),
@@ -68,7 +72,7 @@ class GetStartedPage extends StatelessWidget {
                 child: PrimaryButton(
                   label: 'Get Started',
                   onPressed: () {
-                    Navigator.pushNamed(context, '/onboarding');
+                    context.router.push(const OnboardingViewRoute());
                   },
                 ),
               ),
