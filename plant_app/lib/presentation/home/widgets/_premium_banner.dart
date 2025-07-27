@@ -5,43 +5,61 @@ class PremiumBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.black87,
-        borderRadius: BorderRadius.circular(16),
-      ),
+    final titleGradient = const LinearGradient(
+      colors: [Color(0xFFF0D399), Color(0xFFD9A846)],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    );
+    final subtitleGradient = const LinearGradient(
+      colors: [Color(0xFFD9A846), Color(0xFFF0D399)],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    );
+
+    return Card(
+      margin: EdgeInsets.symmetric(horizontal: 16),
+      color: Theme.of(context).colorScheme.onInverseSurface,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
-        onTap: () => context.router.push(const PaywallViewRoute()),
-        child: Row(
-          children: [
-            const Icon(Icons.email, color: Colors.white),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () {
+          context.router.push(PaywallViewRoute());
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          child: Row(
+            children: [
+              Icon(Icons.email, size: 32, color: Colors.amberAccent),
+              const SizedBox(width: 16),
+
+              // ← HERE: gradient text
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
+                children: [
+                  GradientText(
                     'FREE Premium Available',
-                    style: TextStyle(
-                      color: Colors.white,
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
+                    gradient: titleGradient,
                   ),
                   SizedBox(height: 4),
-                  Text(
+                  GradientText(
                     'Tap to upgrade your account!',
-                    style: TextStyle(color: Colors.white70),
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    gradient: subtitleGradient,
                   ),
                 ],
               ),
-            ),
-            const Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.white70,
-              size: 16,
-            ),
-          ],
+
+              const Spacer(),
+
+              // trailing icon
+              Icon(Icons.chevron_right, color: Colors.amberAccent, size: 24),
+            ],
+          ),
         ),
       ),
     );

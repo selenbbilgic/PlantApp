@@ -11,6 +11,7 @@ final ThemeData lightThemeData = ThemeData(
     onPrimary: Colors.white, // Text on green button
     onSecondary: Colors.black, // Text on secondary bg
     surface: Color(0xFFFBFAFA),
+    inverseSurface: Color(0xFF101E17),
     onSurface: Color.fromARGB(255, 255, 255, 255), // Dark text on surface
     onInverseSurface: Color(0xFF24201A), // Dark text on inverse surface
   ),
@@ -52,6 +53,11 @@ final ThemeData lightThemeData = ThemeData(
       fontWeight: FontWeight.w400,
     ),
     bodyMedium: TextStyle(fontSize: 14, color: Colors.black87),
+    bodySmall: TextStyle(
+      fontWeight: FontWeight.w300,
+      fontSize: 9,
+      color: Colors.white.withAlpha(150),
+    ),
     labelLarge: TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.bold,
