@@ -3,6 +3,9 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:plant_app/core/constants/images.dart';
+import 'package:plant_app/core/widgets/primary_button.dart';
+import 'package:plant_app/data/models/premium_feature.dart';
 
 @RoutePage()
 class PaywallView extends StatelessWidget {
@@ -15,30 +18,44 @@ class PaywallView extends StatelessWidget {
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
 
+    const List<PremiumFeature> features = [
+      PremiumFeature(
+        icon: Icons.crop_free,
+        title: 'Unlimited',
+        subtitle: 'Plant Identify',
+      ),
+      PremiumFeature(
+        icon: Icons.speed,
+        title: 'Faster',
+        subtitle: 'Processing',
+      ),
+      PremiumFeature(icon: Icons.update, title: 'Regular', subtitle: 'Updates'),
+    ];
+
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.inverseSurface,
       extendBodyBehindAppBar: true,
       // No AppBar—you’ll handle the close button manually
       body: Stack(
         children: [
           // 1) Full‑screen background image
-          Positioned.fill(
+          Positioned(
+            left: 0,
+            right: 0,
             child: Image.asset(
-              'assets/images/paywall_bg.jpg', // your forest image
+              PAYWALL_IMAGE, // your forest image
               fit: BoxFit.cover,
             ),
           ),
 
-          // 2) Semi‑transparent dark overlay
-          Positioned.fill(
-            child: Container(color: Colors.black.withOpacity(0.6)),
-          ),
-
           // 3) Main content, padded into the safe area
           SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                //crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // 3a) Close button
                   Align(
@@ -49,10 +66,11 @@ class PaywallView extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 108),
 
                   // 3b) Title: “PlantApp Premium”
                   RichText(
+                    textAlign: TextAlign.start,
                     text: TextSpan(
                       children: [
                         TextSpan(
@@ -87,27 +105,27 @@ class PaywallView extends StatelessWidget {
                   const SizedBox(height: 24),
 
                   // 3d) Two feature cards
-                  Row(
-                    children: const [
-                      Expanded(
-                        child: _FeatureCard(
-                          icon: Icons.crop_free,
-                          title: 'Unlimited',
-                          subtitle: 'Plant Identify',
-                        ),
-                      ),
-                      SizedBox(width: 16),
-                      Expanded(
-                        child: _FeatureCard(
-                          icon: Icons.speed,
-                          title: 'Faster',
-                          subtitle: 'Process',
-                        ),
-                      ),
-                    ],
+                  SizedBox(
+                    height: MediaQuery.of(context).size.width * 0.34,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: features.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 16),
+                      itemBuilder: (context, idx) {
+                        final f = features[idx];
+                        return SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: _FeatureCard(
+                            icon: f.icon,
+                            title: f.title,
+                            subtitle: f.subtitle,
+                          ),
+                        );
+                      },
+                    ),
                   ),
 
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 24),
 
                   // 3e) Subscription options
                   _SubscriptionOption(
@@ -128,25 +146,12 @@ class PaywallView extends StatelessWidget {
                   const SizedBox(height: 32),
 
                   // 3f) Primary action button
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF28AF6E),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    onPressed: () {},
-                    child: const Text(
-                      'Try free for 3 days',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                  PrimaryButton(
+                    label: 'Try free for 3 days',
+                    onPressed: () => null,
                   ),
 
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 10),
 
                   // 3g) Footnote
                   Text(
@@ -157,13 +162,14 @@ class PaywallView extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
 
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 10),
 
                   // 3h) Terms · Privacy · Restore
                   Center(
                     child: Wrap(
                       spacing: 8,
                       alignment: WrapAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         _FooterLink(label: 'Terms', onTap: () {}),
                         const Text(
@@ -206,7 +212,7 @@ class _FeatureCard extends StatelessWidget {
       height: 100,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.grey.shade900,
+        color: Colors.white.withAlpha(20),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -252,18 +258,22 @@ class _SubscriptionOption extends StatelessWidget {
   Widget build(BuildContext context) {
     final borderColor =
         selected ? const Color(0xFF28AF6E) : Colors.grey.shade700;
-    final bgColor =
-        selected ? Colors.green.withOpacity(0.1) : Colors.transparent;
+    final bgColor = selected ? Colors.green.withAlpha(10) : Colors.transparent;
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(24),
+      borderRadius: BorderRadius.circular(14),
       child: Container(
+        height: MediaQuery.of(context).size.height * 0.08,
         decoration: BoxDecoration(
           color: bgColor,
-          border: Border.all(color: borderColor, width: 1.5),
-          borderRadius: BorderRadius.circular(24),
+          border: Border.all(
+            color: borderColor,
+            width: selected ? 2 : 0.5,
+            strokeAlign: 1.5,
+          ),
+          borderRadius: BorderRadius.circular(14),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        padding: const EdgeInsets.all(4),
         child: Row(
           children: [
             Radio<bool>(
@@ -276,13 +286,13 @@ class _SubscriptionOption extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.titleSmall?.copyWith(color: Colors.white),
                   ),
                   Text(
                     price,
@@ -320,6 +330,13 @@ class _FooterLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) => GestureDetector(
     onTap: onTap,
-    child: Text(label, style: TextStyle(color: Colors.white54, fontSize: 12)),
+    child: Text(
+      label,
+      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+        color: Colors.white.withAlpha(150),
+        fontWeight: FontWeight.w400,
+        fontSize: 11,
+      ),
+    ),
   );
 }
