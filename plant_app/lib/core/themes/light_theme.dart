@@ -6,10 +6,13 @@ final ThemeData lightThemeData = ThemeData(
   fontFamily: 'Roboto',
   primaryColor: Color(0xFF2CCC80B), // Plant green
   colorScheme: ColorScheme.light(
-    primary: Color(0xFF00A86B), // Green buttons
-    secondary: Color(0xFFEEEEEE), // Light gray for backgrounds/cards
+    primary: Color(0xFF28AF6E), // Green buttons
+    secondary: Color(0xFFBDBDBD), // Light gray for backgrounds/cards
     onPrimary: Colors.white, // Text on green button
     onSecondary: Colors.black, // Text on secondary bg
+    surface: Color(0xFFFBFAFA),
+    onSurface: Color.fromARGB(255, 255, 255, 255), // Dark text on surface
+    onInverseSurface: Color(0xFF24201A), // Dark text on inverse surface
   ),
 
   appBarTheme: AppBarTheme(
@@ -25,7 +28,7 @@ final ThemeData lightThemeData = ThemeData(
   textTheme: TextTheme(
     headlineMedium: TextStyle(
       fontSize: 24,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
       color: Color(0xFF13231B),
     ),
     displayLarge: TextStyle(
@@ -38,10 +41,15 @@ final ThemeData lightThemeData = ThemeData(
       fontWeight: FontWeight.w600,
       color: Colors.black,
     ),
+    titleSmall: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      color: Color(0xFF13231B),
+    ),
     bodyLarge: TextStyle(
       fontSize: 16,
       color: Color(0xFF13231B),
-      fontWeight: FontWeight.w100,
+      fontWeight: FontWeight.w400,
     ),
     bodyMedium: TextStyle(fontSize: 14, color: Colors.black87),
     labelLarge: TextStyle(
@@ -61,13 +69,29 @@ final ThemeData lightThemeData = ThemeData(
   ),
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
-    fillColor: Color(0xFFF5F5F5),
+    fillColor: const Color(0xFFF5F5F5),
+
+    // This is your “idle” state border
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: Color(0x3C3C4340), width: 1),
+    ),
+
+    // This is your “focused” state border
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: Color(0xFF28AF6E), width: 1),
+    ),
+
+    // You can still leave `border:` as a fallback if you like:
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
-      borderSide: BorderSide.none,
+      borderSide: BorderSide(color: Color(0x3C3C4340), width: 1),
     ),
-    hintStyle: TextStyle(color: Colors.grey),
+
+    hintStyle: const TextStyle(color: Color(0x3C3C4340)),
   ),
+
   cardTheme: CardTheme(
     color: Color(0xFFF5F5F5),
     elevation: 2,
