@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:plant_app/core/constants/icons.dart';
+import 'package:plant_app/presentation/diagnose/diagnose_view.dart';
+import 'package:plant_app/presentation/garden/garden_view.dart';
 import 'package:plant_app/presentation/home/home_view.dart';
 import 'package:plant_app/presentation/onboarding/onboarding_page_1.dart';
 import 'package:plant_app/presentation/onboarding/onboarding_page_2.dart';
+import 'package:plant_app/presentation/profile/profile_view.dart';
+import 'package:plant_app/presentation/scanner/scan_view.dart';
 
 @RoutePage()
 class BottomNavBarView extends StatefulWidget {
@@ -19,10 +23,10 @@ class BottomNavBarViewState extends State<BottomNavBarView> {
 
   final List<Widget> _screens = [
     HomeView(),
-    OnboardingPage1(),
-    OnboardingPage1(),
-    OnboardingPage1(),
-    OnboardingPage1(),
+    DiagnoseView(),
+    ScanView(),
+    GardenView(),
+    ProfileView(),
   ];
 
   void _onItemTapped(int index) {
