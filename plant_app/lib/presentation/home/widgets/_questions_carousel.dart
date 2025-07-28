@@ -54,7 +54,7 @@ class QuestionsCarousel extends StatelessWidget {
                                 right: 0,
                                 bottom: 6,
                                 child: Container(
-                                  height: 60,
+                                  height: cardHeight * 0.38,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 16,
                                   ),
