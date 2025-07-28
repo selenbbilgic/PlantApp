@@ -3,6 +3,14 @@ part of '../home_view.dart';
 class QuestionsCarousel extends StatelessWidget {
   const QuestionsCarousel();
 
+  Future<void> _openUrl(String url) async {
+    final uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      // handle error, e.g. show a snackbar
+      debugPrint('Could not launch $url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<QuestionBloc, QuestionState>(
@@ -29,41 +37,44 @@ class QuestionsCarousel extends StatelessWidget {
                     return SizedBox(
                       width: cardWidth,
                       height: cardHeight,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Stack(
-                          children: [
-                            Positioned.fill(
-                              child: Image.network(
-                                q.imageUrl,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Positioned(
-                              left: 0,
-                              right: 0,
-                              bottom: 6,
-                              child: Container(
-                                height: 60,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
+                      child: InkWell(
+                        onTap: () => _openUrl(q.url),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Stack(
+                            children: [
+                              Positioned.fill(
+                                child: Image.network(
+                                  q.imageUrl,
+                                  fit: BoxFit.cover,
                                 ),
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  q.title,
-                                  textAlign: TextAlign.left,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(
-                                    context,
-                                  ).textTheme.titleSmall?.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                              ),
+                              Positioned(
+                                left: 0,
+                                right: 0,
+                                bottom: 6,
+                                child: Container(
+                                  height: 60,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                  ),
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    q.title,
+                                    textAlign: TextAlign.left,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.titleSmall?.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     );

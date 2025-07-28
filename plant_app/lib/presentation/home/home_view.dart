@@ -23,6 +23,8 @@ import 'package:plant_app/data/sources/category_data_source.dart';
 import 'package:plant_app/data/sources/question_data_source.dart';
 import 'package:plant_app/presentation/paywall/paywall_view.dart';
 import 'package:plant_app/routes/app_router.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 part 'widgets/_home_header.dart';
 part 'widgets/_search_bar.dart';
 part 'widgets/_premium_banner.dart';
