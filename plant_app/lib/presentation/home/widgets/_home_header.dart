@@ -5,27 +5,19 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // how tall *below* the status‑bar we want the header
     const contentHeight = 175.0;
 
-    // system padding at top (status bar)
     final topPadding = MediaQuery.of(context).padding.top;
 
     return SizedBox(
-      // combine status‑bar + content
       height: topPadding + contentHeight,
       width: double.infinity,
       child: Stack(
         children: [
-          // 1) full‑screen background (goes under status bar)
           Positioned.fill(
-            child: Image.asset(
-              HOME_BACKGROUND,
-              fit: BoxFit.cover, // cover the entire area
-            ),
+            child: Image.asset(HOME_BACKGROUND, fit: BoxFit.cover),
           ),
 
-          // 2) the “safe” content on top
           Positioned(
             top: topPadding,
             left: 0,
@@ -51,7 +43,6 @@ class HomeHeader extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  // 3) search bar
                   TextField(
                     decoration: InputDecoration(
                       hintText: 'Search for plants',

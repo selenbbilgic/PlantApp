@@ -33,7 +33,6 @@ class PremiumBanner extends StatelessWidget {
               SvgPicture.asset(GOLDEN_MESSAGE_ICON, width: 40),
               const SizedBox(width: 16),
 
-              // ← HERE: gradient text
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

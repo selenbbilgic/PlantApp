@@ -8,7 +8,7 @@ class Category {
   final DateTime publishedAt;
   final CategoryImage image;
 
-  Category({
+  const Category({
     required this.id,
     required this.name,
     required this.title,

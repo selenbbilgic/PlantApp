@@ -35,7 +35,6 @@ void main() {
             'title': 'Ferns',
             'rank': 0,
             'image': {
-              // **All** the fields your CategoryImage.fromJson expects:
               'id': 23,
               'name': '6.png',
               'alternativeText': null,
