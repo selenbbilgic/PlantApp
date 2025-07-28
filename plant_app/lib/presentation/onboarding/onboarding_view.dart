@@ -134,8 +134,10 @@ class _OnboardingViewState extends State<OnboardingView> {
                             decoration: BoxDecoration(
                               color:
                                   i == _currentPage
-                                      ? Colors.black87
-                                      : Colors.grey[400],
+                                      ? Theme.of(
+                                        context,
+                                      ).colorScheme.inverseSurface
+                                      : Theme.of(context).colorScheme.secondary,
                               shape: BoxShape.circle,
                             ),
                           ),

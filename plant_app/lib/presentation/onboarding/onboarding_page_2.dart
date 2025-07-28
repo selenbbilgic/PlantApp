@@ -57,7 +57,7 @@ class OnboardingPage2 extends StatelessWidget {
               // Centered Onboarding Image
               Expanded(
                 child: Image.asset(
-                  ONBOARDING_2_IMAGE, // Replace with your image asset
+                  ONBOARDING_2_IMAGE,
                   width: double.infinity,
                   fit: BoxFit.contain,
                 ),

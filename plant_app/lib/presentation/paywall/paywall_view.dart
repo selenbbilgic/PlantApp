@@ -49,7 +49,6 @@ class _PaywallViewState extends State<PaywallView> {
 
   @override
   Widget build(BuildContext context) {
-    // Make the status bar transparent so our image can bleed under it.
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
@@ -61,17 +60,13 @@ class _PaywallViewState extends State<PaywallView> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.inverseSurface,
       extendBodyBehindAppBar: true,
-      // No AppBar—you’ll handle the close button manually
       body: Stack(
         children: [
           // 1) Full‑screen background image
           Positioned(
             left: 0,
             right: 0,
-            child: Image.asset(
-              PAYWALL_IMAGE, // your forest image
-              fit: BoxFit.cover,
-            ),
+            child: Image.asset(PAYWALL_IMAGE, fit: BoxFit.cover),
           ),
 
           // 3) Main content, padded into the safe area
@@ -207,7 +202,6 @@ class _PaywallViewState extends State<PaywallView> {
               ),
             ),
           ),
-          // 3) your close button, absolutely positioned
           Positioned(
             top: MediaQuery.of(context).padding.top + 6,
             right: 16,
@@ -215,21 +209,22 @@ class _PaywallViewState extends State<PaywallView> {
               width: 32,
               height: 32,
               decoration: BoxDecoration(
-                color: Colors.black45,
+                color: Theme.of(context).colorScheme.inverseSurface,
                 shape: BoxShape.circle,
               ),
               child: IconButton(
                 padding: EdgeInsets.zero,
                 splashRadius: 16,
                 iconSize: 20,
-                icon: const Icon(Icons.close, color: Colors.white),
+                icon: Icon(
+                  Icons.close,
+                  color: Theme.of(context).colorScheme.surface,
+                ),
                 onPressed: () {
                   if (isOnboarding) {
-                    // 1️⃣ onboarding path → fire event, global listener will replaceAll → home
                     context.read<AppBloc>().add(OnboardingCompleted());
                     // context.router.push(const BottomNavBarViewRoute());
                   } else {
-                    // 2️⃣ already home → just pop back to bottom‐nav view
                     context.router.maybePop();
                   }
                 },

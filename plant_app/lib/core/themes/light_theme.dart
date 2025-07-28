@@ -93,19 +93,16 @@ final ThemeData lightThemeData = ThemeData(
     filled: true,
     fillColor: const Color(0xFFF5F5F5),
 
-    // This is your “idle” state border
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
       borderSide: BorderSide(color: Color(0x3C3C4340), width: 1),
     ),
 
-    // This is your “focused” state border
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
       borderSide: BorderSide(color: Color(0xFF28AF6E), width: 1),
     ),
 
-    // You can still leave `border:` as a fallback if you like:
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
       borderSide: BorderSide(color: Color(0x3C3C4340), width: 1),

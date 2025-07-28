@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plant_app/core/widgets/custom_raido_button.dart';
 
 /// A subscription row with a radio, text, and optional badge.
 class SubscriptionOption extends StatelessWidget {
@@ -19,8 +20,13 @@ class SubscriptionOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final borderColor =
-        selected ? const Color(0xFF28AF6E) : Colors.grey.shade700;
-    final bgColor = selected ? Colors.green.withAlpha(10) : Colors.transparent;
+        selected
+            ? Theme.of(context).colorScheme.primary
+            : Theme.of(context).colorScheme.secondary.withAlpha(120);
+    final bgColor =
+        selected
+            ? Theme.of(context).colorScheme.primary.withAlpha(10)
+            : Colors.transparent;
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(14),
@@ -33,14 +39,15 @@ class SubscriptionOption extends StatelessWidget {
               border: Border.all(color: borderColor, width: selected ? 2 : 0.5),
               borderRadius: BorderRadius.circular(14),
             ),
-            padding: const EdgeInsets.all(4),
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 14),
             child: Row(
               children: [
-                Radio<bool>(
-                  value: true,
-                  groupValue: selected,
-                  onChanged: (_) => onTap(),
-                  activeColor: const Color(0xFF28AF6E),
+                CustomRadio(
+                  selected: selected,
+                  onTap: onTap,
+                  size: 24,
+                  borderWidth: 0,
+                  dotSize: 8,
                 ),
                 const SizedBox(width: 12),
                 Expanded(
