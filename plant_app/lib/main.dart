@@ -27,7 +27,7 @@ class PlantApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: _appRouter.config(),
       theme: lightThemeData,
-
+      debugShowCheckedModeBanner: false,
       builder: (context, child) {
         return BlocListener<AppBloc, AppState>(
           listenWhen: (prev, curr) => prev.status != curr.status,
