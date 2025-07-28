@@ -29,7 +29,7 @@ class PremiumBanner extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           child: Row(
             children: [
-              Icon(Icons.email, size: 32, color: Colors.amberAccent),
+              SvgPicture.asset(GOLDEN_MESSAGE_ICON, width: 40),
               const SizedBox(width: 16),
 
               // ← HERE: gradient text
@@ -46,7 +46,7 @@ class PremiumBanner extends StatelessWidget {
                   SizedBox(height: 4),
                   GradientText(
                     'Tap to upgrade your account!',
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                     gradient: subtitleGradient,

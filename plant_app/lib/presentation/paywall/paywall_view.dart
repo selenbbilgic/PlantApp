@@ -3,13 +3,43 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:plant_app/core/constants/icons.dart';
 import 'package:plant_app/core/constants/images.dart';
 import 'package:plant_app/core/widgets/primary_button.dart';
 import 'package:plant_app/data/models/premium_feature.dart';
+import 'package:plant_app/presentation/paywall/widgets/feature_card.dart';
+import 'package:plant_app/presentation/paywall/widgets/footer_link.dart';
+import 'package:plant_app/presentation/paywall/widgets/subscription_option_card.dart';
 
 @RoutePage()
-class PaywallView extends StatelessWidget {
+class PaywallView extends StatefulWidget {
   const PaywallView({super.key});
+
+  @override
+  State<PaywallView> createState() => _PaywallViewState();
+}
+
+class _PaywallViewState extends State<PaywallView> {
+  int _selectedOption = 1;
+
+  List<PremiumFeature> features = [
+    PremiumFeature(
+      svgAsset: SCANNER_ICON,
+      title: 'Unlimited',
+      subtitle: 'Plant Identify',
+    ),
+    PremiumFeature(
+      svgAsset: SPEEDOMETER_ICON,
+      title: 'Faster',
+      subtitle: 'Processing',
+    ),
+    PremiumFeature(
+      svgAsset: SPEEDOMETER_ICON,
+      title: 'Regular',
+      subtitle: 'Updates',
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -17,20 +47,6 @@ class PaywallView extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
-
-    const List<PremiumFeature> features = [
-      PremiumFeature(
-        icon: Icons.crop_free,
-        title: 'Unlimited',
-        subtitle: 'Plant Identify',
-      ),
-      PremiumFeature(
-        icon: Icons.speed,
-        title: 'Faster',
-        subtitle: 'Processing',
-      ),
-      PremiumFeature(icon: Icons.update, title: 'Regular', subtitle: 'Updates'),
-    ];
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.inverseSurface,
@@ -57,18 +73,7 @@ class PaywallView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 3a) Close button
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: IconButton(
-                      icon: const Icon(Icons.close, color: Colors.white),
-                      onPressed: () => Navigator.of(context).pop(),
-                    ),
-                  ),
-
-                  const SizedBox(height: 108),
-
-                  // 3b) Title: “PlantApp Premium”
+                  Spacer(),
                   RichText(
                     textAlign: TextAlign.start,
                     text: TextSpan(
@@ -115,8 +120,8 @@ class PaywallView extends StatelessWidget {
                         final f = features[idx];
                         return SizedBox(
                           width: MediaQuery.of(context).size.width * 0.4,
-                          child: _FeatureCard(
-                            icon: f.icon,
+                          child: FeatureCard(
+                            icon: f.svgAsset,
                             title: f.title,
                             subtitle: f.subtitle,
                           ),
@@ -128,19 +133,19 @@ class PaywallView extends StatelessWidget {
                   const SizedBox(height: 24),
 
                   // 3e) Subscription options
-                  _SubscriptionOption(
+                  SubscriptionOption(
                     title: '1 Month',
                     price: '\$2.99/month, auto renewable',
-                    selected: false,
-                    onTap: () {},
+                    selected: _selectedOption == 0,
+                    onTap: () => setState(() => _selectedOption = 0),
                   ),
                   const SizedBox(height: 16),
-                  _SubscriptionOption(
+                  SubscriptionOption(
                     title: '1 Year',
                     price: 'First 3 days free, then \$529.99/year',
-                    selected: true,
+                    selected: _selectedOption == 1,
                     badge: 'Save 50%',
-                    onTap: () {},
+                    onTap: () => setState(() => _selectedOption = 1),
                   ),
 
                   const SizedBox(height: 32),
@@ -171,17 +176,17 @@ class PaywallView extends StatelessWidget {
                       alignment: WrapAlignment.center,
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
-                        _FooterLink(label: 'Terms', onTap: () {}),
+                        FooterLink(label: 'Terms', onTap: () {}),
                         const Text(
                           '·',
                           style: TextStyle(color: Colors.white54),
                         ),
-                        _FooterLink(label: 'Privacy', onTap: () {}),
+                        FooterLink(label: 'Privacy', onTap: () {}),
                         const Text(
                           '·',
                           style: TextStyle(color: Colors.white54),
                         ),
-                        _FooterLink(label: 'Restore', onTap: () {}),
+                        FooterLink(label: 'Restore', onTap: () {}),
                       ],
                     ),
                   ),
@@ -189,154 +194,29 @@ class PaywallView extends StatelessWidget {
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-/// A little card showing an icon + title + subtitle.
-class _FeatureCard extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  const _FeatureCard({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white.withAlpha(20),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, size: 28, color: Colors.white),
-          const Spacer(),
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+          // 3) your close button, absolutely positioned
+          Positioned(
+            top: MediaQuery.of(context).padding.top + 6,
+            right: 16,
+            child: Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: Colors.black45,
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                splashRadius: 16,
+                iconSize: 20,
+                icon: const Icon(Icons.close, color: Colors.white),
+                onPressed: () => Navigator.of(context).pop(),
+                tooltip: 'Close',
+              ),
             ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            subtitle,
-            style: const TextStyle(color: Colors.white70, fontSize: 12),
           ),
         ],
       ),
     );
   }
-}
-
-/// A subscription row with a radio, text, and optional badge.
-class _SubscriptionOption extends StatelessWidget {
-  final String title;
-  final String price;
-  final bool selected;
-  final String? badge;
-  final VoidCallback onTap;
-
-  const _SubscriptionOption({
-    required this.title,
-    required this.price,
-    required this.selected,
-    this.badge,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final borderColor =
-        selected ? const Color(0xFF28AF6E) : Colors.grey.shade700;
-    final bgColor = selected ? Colors.green.withAlpha(10) : Colors.transparent;
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(14),
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.08,
-        decoration: BoxDecoration(
-          color: bgColor,
-          border: Border.all(
-            color: borderColor,
-            width: selected ? 2 : 0.5,
-            strokeAlign: 1.5,
-          ),
-          borderRadius: BorderRadius.circular(14),
-        ),
-        padding: const EdgeInsets.all(4),
-        child: Row(
-          children: [
-            Radio<bool>(
-              value: true,
-              groupValue: selected,
-              onChanged: (_) => onTap(),
-              activeColor: const Color(0xFF28AF6E),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.titleSmall?.copyWith(color: Colors.white),
-                  ),
-                  Text(
-                    price,
-                    style: const TextStyle(color: Colors.white70, fontSize: 12),
-                  ),
-                ],
-              ),
-            ),
-            if (badge != null) ...[
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF28AF6E),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  badge!,
-                  style: const TextStyle(color: Colors.white, fontSize: 12),
-                ),
-              ),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// A tappable footer link
-class _FooterLink extends StatelessWidget {
-  final String label;
-  final VoidCallback onTap;
-  const _FooterLink({required this.label, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) => GestureDetector(
-    onTap: onTap,
-    child: Text(
-      label,
-      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-        color: Colors.white.withAlpha(150),
-        fontWeight: FontWeight.w400,
-        fontSize: 11,
-      ),
-    ),
-  );
 }
