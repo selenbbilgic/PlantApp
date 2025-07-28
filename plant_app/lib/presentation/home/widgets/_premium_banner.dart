@@ -27,7 +27,7 @@ class PremiumBanner extends StatelessWidget {
           context.router.push(PaywallViewRoute());
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
           child: Row(
             children: [
               SvgPicture.asset(GOLDEN_MESSAGE_ICON, width: 40),
@@ -58,7 +58,7 @@ class PremiumBanner extends StatelessWidget {
               const Spacer(),
 
               // trailing icon
-              Icon(Icons.chevron_right, color: Colors.amberAccent, size: 24),
+              Icon(Icons.chevron_right, color: Colors.amberAccent, size: 32),
             ],
           ),
         ),

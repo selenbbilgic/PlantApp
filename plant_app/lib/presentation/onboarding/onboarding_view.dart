@@ -9,16 +9,15 @@ import 'package:plant_app/routes/app_router.dart';
 @RoutePage()
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
-
   @override
   State<OnboardingView> createState() => _OnboardingViewState();
 }
 
 class _OnboardingViewState extends State<OnboardingView> {
-  final PageController _controller = PageController();
+  final _controller = PageController();
   int _currentPage = 0;
 
-  final List<_OnboardingContent> _pages = const [
+  final _pages = const [
     _OnboardingContent(
       titleStart: 'Take a photo to ',
       titleHighlight: 'identify',
@@ -31,123 +30,122 @@ class _OnboardingViewState extends State<OnboardingView> {
       titleEnd: ' instantly!',
       image: ONBOARDING_2_IMAGE,
     ),
-    _OnboardingContent(
-      titleStart: 'Get ',
-      titleHighlight: 'care tips',
-      titleEnd: ' tailored for you!',
-      image: GET_STARTED_IMAGE,
-    ),
   ];
 
-  void _nextPage() {
+  void _next() {
     if (_currentPage < _pages.length - 1) {
       _controller.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     } else {
-      context.router.push(const BottomNavBarViewRoute());
+      context.router.push(const PaywallViewRoute());
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final topPad = MediaQuery.of(context).padding.top;
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          child: Column(
-            children: [
-              Expanded(
-                child: PageView.builder(
-                  controller: _controller,
-                  onPageChanged: (index) {
-                    setState(() => _currentPage = index);
-                  },
-                  itemCount: _pages.length,
-                  itemBuilder: (context, index) {
-                    final item = _pages[index];
-                    return Column(
-                      children: [
-                        const SizedBox(height: 24),
-                        Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                text: item.titleStart,
-                                style: theme.textTheme.displayLarge?.copyWith(
-                                  fontSize: 26,
-                                ),
-                              ),
-                              TextSpan(
-                                text: item.titleHighlight,
-                                style: theme.textTheme.displayLarge?.copyWith(
-                                  fontSize: 26,
-                                  fontWeight: FontWeight.bold,
-                                  color: theme.colorScheme.primary,
-                                ),
-                              ),
-                              TextSpan(
-                                text: item.titleEnd,
-                                style: theme.textTheme.displayLarge?.copyWith(
-                                  fontSize: 26,
-                                ),
-                              ),
-                            ],
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 32),
-                        Expanded(
-                          child: Image.asset(
-                            item.image,
-                            width: double.infinity,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 32),
-
-              PrimaryButton(
-                label:
-                    _currentPage == _pages.length - 1
-                        ? 'Get Started'
-                        : 'Continue',
-                onPressed: _nextPage,
-              ),
-
-              const SizedBox(height: 16),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                  _pages.length,
-                  (index) => _buildDot(index == _currentPage),
-                ),
-              ),
-
-              const SizedBox(height: 16),
-            ],
+      extendBodyBehindAppBar: true,
+      body: Stack(
+        children: [
+          // 1) background (behind status bar)
+          Positioned.fill(
+            child: Image.asset(ONBOARDING_BACKGROUND, fit: BoxFit.cover),
           ),
-        ),
-      ),
-    );
-  }
 
-  Widget _buildDot(bool isActive) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      width: isActive ? 10 : 8,
-      height: isActive ? 10 : 8,
-      decoration: BoxDecoration(
-        color: isActive ? Colors.black87 : Colors.grey[400],
-        shape: BoxShape.circle,
+          SafeArea(
+            child: Column(
+              children: [
+                SizedBox(height: 12),
+                // 2) the swipable “above‐the‐button” area
+                Expanded(
+                  child: PageView.builder(
+                    controller: _controller,
+                    onPageChanged: (i) => setState(() => _currentPage = i),
+                    itemCount: _pages.length,
+                    itemBuilder: (_, i) {
+                      final p = _pages[i];
+                      return Stack(
+                        children: [
+                          // full‐width hero image
+                          Positioned(
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            child: Image.asset(
+                              p.image,
+                              fit: BoxFit.contain,
+                              height: MediaQuery.of(context).size.height * .8,
+                            ),
+                          ),
+                          // title text
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: p.titleStart,
+                                    style: theme.textTheme.displayLarge
+                                        ?.copyWith(fontWeight: FontWeight.w500),
+                                  ),
+                                  TextSpan(
+                                    text: p.titleHighlight,
+                                    style: theme.textTheme.displayLarge
+                                        ?.copyWith(fontWeight: FontWeight.w800),
+                                  ),
+                                  TextSpan(
+                                    text: p.titleEnd,
+                                    style: theme.textTheme.displayLarge
+                                        ?.copyWith(fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      PrimaryButton(label: 'Continue', onPressed: _next),
+                      const SizedBox(height: 24),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          _pages.length + 1,
+                          (i) => Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            width: i == _currentPage ? 10 : 8,
+                            height: i == _currentPage ? 10 : 8,
+                            decoration: BoxDecoration(
+                              color:
+                                  i == _currentPage
+                                      ? Colors.black87
+                                      : Colors.grey[400],
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

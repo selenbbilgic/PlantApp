@@ -7,6 +7,7 @@ final ThemeData lightThemeData = ThemeData(
   primaryColor: Color(0xFF2CCC80B), // Plant green
   colorScheme: ColorScheme.light(
     primary: Color(0xFF28AF6E), // Green buttons
+    tertiary: Color(0xFF597165),
     secondary: Color(0xFFBDBDBD), // Light gray for backgrounds/cards
     onPrimary: Colors.white, // Text on green button
     onSecondary: Colors.black, // Text on secondary bg
@@ -33,7 +34,7 @@ final ThemeData lightThemeData = ThemeData(
       color: Color(0xFF13231B),
     ),
     displayLarge: TextStyle(
-      fontSize: 32,
+      fontSize: 28,
       fontWeight: FontWeight.bold,
       color: Colors.black,
     ),

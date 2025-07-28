@@ -1,6 +1,7 @@
 // lib/presentation/paywall/paywall_view.dart
 
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,6 +12,7 @@ import 'package:plant_app/data/models/premium_feature.dart';
 import 'package:plant_app/presentation/paywall/widgets/feature_card.dart';
 import 'package:plant_app/presentation/paywall/widgets/footer_link.dart';
 import 'package:plant_app/presentation/paywall/widgets/subscription_option_card.dart';
+import 'package:plant_app/routes/app_router.dart';
 
 @RoutePage()
 class PaywallView extends StatefulWidget {
@@ -67,7 +69,10 @@ class _PaywallViewState extends State<PaywallView> {
           // 3) Main content, padded into the safe area
           SafeArea(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 0,
+              ),
               child: Column(
                 //crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -148,7 +153,7 @@ class _PaywallViewState extends State<PaywallView> {
                     onTap: () => setState(() => _selectedOption = 1),
                   ),
 
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 24),
 
                   // 3f) Primary action button
                   PrimaryButton(
@@ -210,7 +215,8 @@ class _PaywallViewState extends State<PaywallView> {
                 splashRadius: 16,
                 iconSize: 20,
                 icon: const Icon(Icons.close, color: Colors.white),
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed:
+                    () => context.router.push(const BottomNavBarViewRoute()),
                 tooltip: 'Close',
               ),
             ),
