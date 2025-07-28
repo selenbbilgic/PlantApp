@@ -7,13 +7,13 @@ import 'package:plant_app/blocs/app_state.dart';
 import 'package:plant_app/core/themes/light_theme.dart';
 import 'package:plant_app/presentation/onboarding/get_started_page.dart';
 import 'package:plant_app/routes/app_router.dart';
-import 'package:plant_app/presentation/bottombar/bottom_nav_bar_view.dart'; // Make sure this import points to where HomeViewRoute is generated or defined
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     BlocProvider(
       create: (_) => AppBloc()..add(AppStarted()),
-      child: PlantApp(),
+      child: const PlantApp(),
     ),
   );
 }
@@ -24,21 +24,23 @@ class PlantApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AppBloc, AppState>(
-      listenWhen: (p, c) => p.status != c.status,
-      listener: (ctx, state) {
-        if (state.status == AppStatus.home) {
-          // replace the stack with Home
-          ctx.router.replaceAll([const BottomNavBarViewRoute()]);
-        } else {
-          // if you ever need to go back to onboarding:
-          ctx.router.replaceAll([const GetStartedPageRoute()]);
-        }
+    return MaterialApp.router(
+      routerConfig: _appRouter.config(),
+      theme: lightThemeData,
+
+      builder: (context, child) {
+        return BlocListener<AppBloc, AppState>(
+          listenWhen: (prev, curr) => prev.status != curr.status,
+          listener: (_, state) {
+            if (state.status == AppStatus.home) {
+              _appRouter.replaceAll([const BottomNavBarViewRoute()]);
+            } else {
+              _appRouter.replaceAll([const GetStartedPageRoute()]);
+            }
+          },
+          child: child!,
+        );
       },
-      child: MaterialApp.router(
-        routerConfig: _appRouter.config(),
-        theme: lightThemeData,
-      ),
     );
   }
 }

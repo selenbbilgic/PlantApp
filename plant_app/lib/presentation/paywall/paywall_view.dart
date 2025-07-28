@@ -4,7 +4,11 @@ import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:plant_app/blocs/app_bloc.dart';
+import 'package:plant_app/blocs/app_event.dart';
+import 'package:plant_app/blocs/app_state.dart';
 import 'package:plant_app/core/constants/icons.dart';
 import 'package:plant_app/core/constants/images.dart';
 import 'package:plant_app/core/widgets/primary_button.dart';
@@ -48,6 +52,10 @@ class _PaywallViewState extends State<PaywallView> {
     // Make the status bar transparent so our image can bleed under it.
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+    );
+
+    final isOnboarding = context.select(
+      (AppBloc bloc) => bloc.state.status == AppStatus.onboarding,
     );
 
     return Scaffold(
@@ -215,8 +223,16 @@ class _PaywallViewState extends State<PaywallView> {
                 splashRadius: 16,
                 iconSize: 20,
                 icon: const Icon(Icons.close, color: Colors.white),
-                onPressed:
-                    () => context.router.push(const BottomNavBarViewRoute()),
+                onPressed: () {
+                  if (isOnboarding) {
+                    // 1️⃣ onboarding path → fire event, global listener will replaceAll → home
+                    context.read<AppBloc>().add(OnboardingCompleted());
+                    // context.router.push(const BottomNavBarViewRoute());
+                  } else {
+                    // 2️⃣ already home → just pop back to bottom‐nav view
+                    context.router.maybePop();
+                  }
+                },
                 tooltip: 'Close',
               ),
             ),
