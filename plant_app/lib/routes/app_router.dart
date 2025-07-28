@@ -12,10 +12,23 @@ part 'app_router.gr.dart';
 class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
+    CustomRoute(
+      page: BottomNavBarViewRoute.page,
+      transitionsBuilder: TransitionsBuilders.fadeIn,
+      durationInMilliseconds: 300,
+    ),
     AutoRoute(page: GetStartedPageRoute.page, initial: true),
-    AutoRoute(page: OnboardingViewRoute.page),
-    AutoRoute(page: BottomNavBarViewRoute.page),
-    AutoRoute(page: PaywallViewRoute.page),
+    CustomRoute(
+      page: OnboardingViewRoute.page,
+      transitionsBuilder: TransitionsBuilders.slideLeft,
+      durationInMilliseconds: 200,
+    ),
+    //AutoRoute(page: BottomNavBarViewRoute.page),
+    CustomRoute(
+      page: PaywallViewRoute.page,
+      transitionsBuilder: TransitionsBuilders.slideBottom,
+      durationInMilliseconds: 300,
+    ),
   ];
 }
 
