@@ -38,6 +38,7 @@ dependencies:
   auto_route: ^9.2.2
   shared_preferences: ^2.5.3
   http: ^1.4.0
+  flutter_svg: ^2.2.0
 
 dev_dependencies:
   auto_route_generator: ^9.0.0

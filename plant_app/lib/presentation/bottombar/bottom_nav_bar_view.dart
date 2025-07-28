@@ -1,6 +1,8 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:plant_app/core/constants/icons.dart';
 import 'package:plant_app/presentation/home/home_view.dart';
 import 'package:plant_app/presentation/onboarding/onboarding_page_1.dart';
 import 'package:plant_app/presentation/onboarding/onboarding_page_2.dart';
@@ -32,6 +34,7 @@ class BottomNavBarViewState extends State<BottomNavBarView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: Column(
         children: [
           Expanded(
@@ -39,52 +42,91 @@ class BottomNavBarViewState extends State<BottomNavBarView> {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        // Add a 1px top border:
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(
-              color: Theme.of(context).colorScheme.secondary.withAlpha(80),
-              width: 1,
+
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: selectedIndex,
+        onTap: (i) => setState(() => selectedIndex = i),
+        showUnselectedLabels: true,
+        selectedLabelStyle: Theme.of(context).textTheme.labelSmall?.copyWith(
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        unselectedLabelStyle: Theme.of(context).textTheme.labelSmall?.copyWith(
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+        items: [
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              HOME_ICON,
+              width: 24,
+              colorFilter: ColorFilter.mode(
+                Theme.of(context).colorScheme.secondary,
+                BlendMode.srcIn,
+              ),
             ),
+            activeIcon: SvgPicture.asset(
+              HOME_ICON,
+              width: 24,
+              colorFilter: ColorFilter.mode(
+                Theme.of(context).colorScheme.primary,
+                BlendMode.srcIn,
+              ),
+            ),
+            label: 'Home',
           ),
-        ),
-        child: BottomAppBar(
-          shape: const CircularNotchedRectangle(),
-          color: Theme.of(context).colorScheme.surface,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildNavIcon(Icons.home, 0, context),
-              _buildNavIcon(Icons.favorite, 1, context),
-              const SizedBox(width: 48), // Space for FAB
-              _buildNavIcon(Icons.person, 3, context),
-              _buildNavIcon(Icons.settings, 4, context),
-            ],
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(HEALTHCARE_ICON, width: 24),
+            activeIcon: SvgPicture.asset(
+              HEALTHCARE_ICON,
+              width: 24,
+              colorFilter: ColorFilter.mode(
+                Theme.of(context).colorScheme.primary,
+                BlendMode.srcIn,
+              ),
+            ),
+            label: 'Diagnose',
           ),
-        ),
+          // placeholder for the FAB slot
+          BottomNavigationBarItem(icon: SizedBox.shrink(), label: ''),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(GARDEN_ICON, width: 24),
+            activeIcon: SvgPicture.asset(
+              GARDEN_ICON,
+              width: 24,
+              colorFilter: ColorFilter.mode(
+                Theme.of(context).colorScheme.primary,
+                BlendMode.srcIn,
+              ),
+            ),
+            label: 'My Garden',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(PROFILE_ICON, width: 24),
+            activeIcon: SvgPicture.asset(
+              PROFILE_ICON,
+              width: 24,
+              colorFilter: ColorFilter.mode(
+                Theme.of(context).colorScheme.primary,
+                BlendMode.srcIn,
+              ),
+            ),
+            label: 'Profile',
+          ),
+        ],
+        type: BottomNavigationBarType.fixed,
       ),
+
       floatingActionButton: FloatingActionButton(
         elevation: 0,
-        backgroundColor:
-            Theme.of(context).colorScheme.primary, // Customize as needed
+        backgroundColor: Theme.of(context).colorScheme.primary,
         shape: const CircleBorder(),
-        onPressed: () => _onItemTapped(2), // Tap to select Favorites
-        child: const Icon(size: 40, Icons.add, color: Colors.white),
+        onPressed: () => _onItemTapped(2),
+        child: SvgPicture.asset(
+          width: 26,
+          SCANNER_ICON,
+          colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-    );
-  }
-
-  Widget _buildNavIcon(IconData icon, int index, BuildContext ctx) {
-    final isSelected = selectedIndex == index;
-    final color =
-        isSelected
-            ? Theme.of(ctx).colorScheme.primary
-            : Theme.of(ctx).colorScheme.secondary;
-    return IconButton(
-      icon: Icon(icon, size: 30, color: color),
-      onPressed: () => _onItemTapped(index),
     );
   }
 }

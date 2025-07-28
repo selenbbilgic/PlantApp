@@ -42,6 +42,11 @@ final ThemeData lightThemeData = ThemeData(
       fontWeight: FontWeight.w600,
       color: Colors.black,
     ),
+    titleMedium: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.w500,
+      color: Color(0xFFFFFFFF),
+    ),
     titleSmall: TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w500,
@@ -58,9 +63,19 @@ final ThemeData lightThemeData = ThemeData(
       fontSize: 9,
       color: Colors.white.withAlpha(150),
     ),
+    labelMedium: TextStyle(
+      fontSize: 13,
+      fontWeight: FontWeight.w400,
+      color: Color(0xFFFFFFFF),
+    ),
     labelLarge: TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.bold,
+      color: Colors.white,
+    ),
+    labelSmall: TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w300,
       color: Colors.white,
     ), // For buttons
   ),

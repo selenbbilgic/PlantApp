@@ -54,7 +54,7 @@ class CategoryGrid extends StatelessWidget {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Container(
-                        width: 120,
+                        width: 130,
                         alignment: Alignment.topLeft,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 12,
