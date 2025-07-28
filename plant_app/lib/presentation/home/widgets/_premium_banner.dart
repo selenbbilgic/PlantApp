@@ -17,7 +17,8 @@ class PremiumBanner extends StatelessWidget {
     );
 
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 16),
+      //margin: EdgeInsets.zero,
+      margin: EdgeInsets.symmetric(horizontal: 14),
       color: Theme.of(context).colorScheme.onInverseSurface,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
