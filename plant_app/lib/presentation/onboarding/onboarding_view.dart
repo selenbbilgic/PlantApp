@@ -1,6 +1,9 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:plant_app/blocs/app_bloc.dart';
+import 'package:plant_app/blocs/app_event.dart';
 import 'package:plant_app/core/constants/images.dart';
 import 'package:plant_app/core/widgets/primary_button.dart';
 import 'package:plant_app/presentation/bottombar/bottom_nav_bar_view.dart';
